@@ -1,19 +1,23 @@
+Here's the revised `README.md` with the requested additions included in a professional and technically accurate manner:
+
+---
+
 # Heterogeneous Execution with SYCL on CPU and GPU
 
-*Group Members*:
+**Group Members**:
 
 * Ng Wei Jie
 * Wee Mao Phin
 * Lee Zhao Tian
 
-*Course*: BERR4223 – High Performance Computing
-*Assignment Topic*: Heterogeneous Execution with SYCL
+**Course**: BERR4223 – High Performance Computing
+**Assignment Topic**: Heterogeneous Execution with SYCL
 
 ---
 
 ## Overview
 
-This project is part of our coursework for the High Performance Computing module. The objective is to implement and benchmark a parallel computation task using *SYCL 2020* and *Intel oneAPI, targeting heterogeneous execution across CPU and GPU devices. The kernel selected for this project performs an **element-wise arithmetic square root operation*.
+This project is part of our coursework for the High Performance Computing module. The objective is to implement and benchmark a parallel computation task using **SYCL 2020** and **Intel oneAPI**, targeting heterogeneous execution across CPU and GPU devices. The kernel selected for this project performs an **element-wise arithmetic square root operation**.
 
 ---
 
@@ -21,14 +25,18 @@ This project is part of our coursework for the High Performance Computing module
 
 The specific goals of this assignment are as follows:
 
-* *Kernel Selection: Implement an **arithmetic element-wise square root* operation.
-* *Execution Modes*:
+* **Kernel Selection**: Implement an arithmetic element-wise square root operation.
+* **Execution Modes**:
 
-  * *CPU-only execution*: Utilizing cpu_selector_v.
-  * *GPU-only execution*: Utilizing gpu_selector_v on Intel oneAPI-compatible GPUs.
-  * *Hybrid execution*: Splitting the workload between CPU and GPU using Unified Shared Memory (USM) and concurrent SYCL queues.
-* *Performance Evaluation*: Measure and compare execution time across different strategies.
-* *Numerical Verification*: Ensure the computational outputs are consistent and accurate within a small floating-point tolerance.
+  * **CPU-only execution**: Utilizing `cpu_selector_v`.
+  * **GPU-only execution**: Utilizing `gpu_selector_v` on Intel oneAPI-compatible GPUs.
+  * **Hybrid execution**: Splitting the workload between CPU and GPU using Unified Shared Memory (USM) and concurrent SYCL queues.
+* **Performance Evaluation**: Measure and compare execution time across different strategies.
+* **Numerical Verification**: Ensure the computational outputs are consistent and accurate within a small floating-point tolerance.
+* **Data Logging and Visualization**:
+
+  * Execution times are recorded for each run and saved to a `.csv` file.
+  * A Python script processes this data to generate performance comparison graphs.
 
 ---
 
@@ -36,45 +44,50 @@ The specific goals of this assignment are as follows:
 
 This program benchmarks and compares the performance of an element-wise square root kernel under three SYCL execution paradigms:
 
-1. *CPU-only Execution*
-2. *GPU-only Execution*
-3. *Hybrid Execution (CPU + GPU Split)*
+1. **CPU-only Execution**
+2. **GPU-only Execution**
+3. **Hybrid Execution (CPU + GPU Split)**
+
+Execution mode selection and result verification are included in each run.
 
 ---
 
 ## Methodology
 
-* The kernel processes N single-precision floating-point numbers ranging from 0.0 to N-1.0, storing the square root of each element in an output vector.
-* Each execution mode is benchmarked over ITERATIONS cycles. The first iteration is treated as a warm-up and excluded from average timing calculations to minimize initialization overhead.
-* Hybrid mode divides the input dataset evenly between CPU and GPU using USM and synchronizes kernel execution via wait().
-* Output vectors from all configurations are cross-validated for numerical consistency within an absolute tolerance of ε = 1e-5.
-* Optional detailed output of computed results is controlled using the VERBOSE_OUTPUT flag.
+* The kernel processes **N** single-precision floating-point numbers ranging from 0.0 to N−1.0, storing the square root of each element in an output vector.
+* Each execution mode is benchmarked over **ITERATIONS** cycles. The first iteration acts as a warm-up and is excluded from timing averages to reduce initialization bias.
+* **Hybrid mode** divides the dataset between CPU and GPU devices using USM and synchronizes via `wait()`.
+* **Execution Time Logging**: The timing of each iteration is measured using high-resolution timers and recorded in a `timing_data.csv` file for subsequent analysis.
+* **Graphical Visualization**: A Python script reads the CSV output and generates comparative plots illustrating performance trends across different modes.
+* **Numerical Consistency**: Output vectors from all modes are cross-validated to ensure agreement within an absolute tolerance of ε = 1e-5.
+* Detailed result output is toggled by the `VERBOSE_OUTPUT` flag.
 
 ---
 
 ## Parameters
 
-| Parameter        | Type | Description                                           | Default Value |
-| ---------------- | ---- | ----------------------------------------------------- | ------------- |
-| N              | int  | Number of elements in input/output vectors            | 1000          |
-| ITERATIONS     | int  | Number of execution cycles per mode                   | 11            |
-| VERBOSE_OUTPUT | bool | Enables detailed output of results when set to true | false         |
+| Parameter       | Type | Description                                         | Default Value |
+| --------------- | ---- | --------------------------------------------------- | ------------- |
+| N               | int  | Number of elements in input/output vectors          | 1000          |
+| ITERATIONS      | int  | Number of execution cycles per mode                 | 20            |
+| VERBOSE\_OUTPUT | bool | Enables detailed output of results when set to true | false         |
 
 ---
 
-## Requirements
+## System Requirements
 
 * A system with SYCL support for both CPU and GPU devices.
-* A DPC++/SYCL-compatible compiler, such as:
+* DPC++/SYCL-compatible compiler, such as:
 
-  * *Intel oneAPI DPC++*
-  * *hipSYCL*
- 
+  * **Intel oneAPI DPC++ Compiler**
+  * **hipSYCL** (partial support depending on hardware)
+* **Python 3.x** (with `matplotlib` and `pandas` libraries for plotting)
+
 ---
 
 ## Conclusion
 
-This project demonstrates the benefits and trade-offs of heterogeneous computing using SYCL. By comparing CPU, GPU, and hybrid execution strategies, we gain insights into performance optimization and device utilization in modern high-performance computing environments.
+This project demonstrates the performance implications of executing data-parallel workloads on heterogeneous devices using SYCL. Through detailed benchmarking, logging, and graphical analysis, it highlights the comparative strengths of CPU-only, GPU-only, and hybrid execution modes. The hybrid strategy, in particular, showcases notable performance advantages for scalable parallel tasks by effectively leveraging concurrent CPU-GPU resources.
 
 ---
 
